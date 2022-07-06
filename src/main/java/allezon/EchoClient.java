@@ -68,9 +68,12 @@ public class EchoClient {
 
     @PostMapping("/user_profiles/{cookie}")
     public ResponseEntity<UserProfileResult> getUserProfile(@PathVariable("cookie") String cookie,
+//    public ResponseEntity<AggregatesQueryResult> getUserProfile(@PathVariable("cookie") String cookie,
                                                             @RequestParam("time_range") String timeRangeStr,
                                                             @RequestParam(defaultValue = "200") int limit,
-                                                            @RequestBody(required = false) UserProfileResult expectedResult) throws IOException {
+                                                            @RequestBody(required = false) UserProfileResult expectedResult) throws IOException, InterruptedException {
+//        return this.getAggregates(timeRangeStr, Action.BUY, new ArrayList<>(Collections.singleton(Aggregate.COUNT)),null,null,null,null);
+
         String[] splitTimeRange = timeRangeStr.split("_");
         LocalDateTime timeFrom = LocalDateTime.parse(splitTimeRange[0]);
         LocalDateTime timeTo = LocalDateTime.parse(splitTimeRange[1]);
@@ -98,8 +101,13 @@ public class EchoClient {
             @RequestParam(value = "origin", required = false) String origin,
             @RequestParam(value = "brand_id", required = false) String brandId,
             @RequestParam(value = "category_id", required = false) String categoryId,
-            @RequestBody(required = false) AggregatesQueryResult expectedResult) {
+            @RequestBody(required = false) AggregatesQueryResult expectedResult) throws InterruptedException {
+        String[] splitTimeRange = timeRangeStr.split("_");
+        LocalDateTime timeFrom = LocalDateTime.parse(splitTimeRange[0]);
+        LocalDateTime timeTo = LocalDateTime.parse(splitTimeRange[1]);
 
-        return ResponseEntity.ok(expectedResult);
+        AggregatesQueryResult result = kafkaDao.get(action, aggregates, timeFrom, timeTo, origin, brandId, categoryId);
+
+        return ResponseEntity.ok(result);
     }
 }
