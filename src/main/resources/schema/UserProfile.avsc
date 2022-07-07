@@ -44,3 +44,16 @@
     }
   ]
 }
+{
+  "namespace": "allezon",
+  "type": "record",
+  "name": "KafkaUserTag",
+  "fields": [
+    {"name": "time", "type": "string"},
+    {"name": "origin", "type": "string"},
+    {"name": "brand_id", "type":  "string"},
+    {"name": "category_id", "type":  "string"},
+    {"name": "price", "type":  "int"}
+  ]
+}
+
