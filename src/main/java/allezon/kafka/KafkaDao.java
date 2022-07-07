@@ -91,7 +91,7 @@ public class KafkaDao {
     public AggregatesQueryResult get(Action action, List<Aggregate> aggregates,
                                      LocalDateTime timeFrom, LocalDateTime timeTo,
                                      String origin, String brandId, String categoryId) throws InterruptedException {
-        // TODO ta architektura jest mocno podejrzane, głupia i po prostu nie działa
+        // TODO ta architektura jest mocno podejrzana, głupia i po prostu nie działa
         //  nie powinnyśmy tworzyć nowej instancji KafkaStreams tylko po to żeby móc query'ować ze store, który załatwia nam AllezonAggregator
         //  ale nie wiem jak to zrobić
 
