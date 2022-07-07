@@ -28,8 +28,8 @@ public class EchoClient {
 
     @PostMapping("/user_tags")
     public ResponseEntity<Void> addUserTag(@RequestBody(required = false) UserTag userTag) throws IOException {
-//        aerospikeDao.put(userTag); TODO odkomentować jeśli chcemy usecase 3
-        kafkaDao.put(userTag);
+        aerospikeDao.put(userTag);
+//        kafkaDao.put(userTag); // TODO odkomentować jeśli chcemy usecase 3
 
         return ResponseEntity.noContent().build();
     }
