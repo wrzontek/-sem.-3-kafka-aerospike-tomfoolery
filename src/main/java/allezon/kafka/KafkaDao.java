@@ -40,30 +40,31 @@ public class KafkaDao {
     final Serde<KafkaUserTag> kafkaUserTagSerde = new KafkaUserTagSerde();
 
     public KafkaDao(@Value("${kafka.bootstrapservers}") String bootstrapServers) {
-        producerProps = new Properties();
-        producerProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        producerProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        producerProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaUserTagSerializer.class);
-        producerProps.put(ProducerConfig.ACKS_CONFIG, "all");
-        producer = new KafkaProducer<>(producerProps);
-
-        consumerProps = new Properties();
-        consumerProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        consumerProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        consumerProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaUserTagSerializer.class);
-        consumerProps.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, KafkaUserTagSerde.class);
-        consumerProps.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, KafkaUserTagSerde.class);
-        consumerProps.put(StreamsConfig.DEFAULT_WINDOWED_KEY_SERDE_INNER_CLASS, KafkaUserTagSerde.class);
-        consumerProps.put(StreamsConfig.DEFAULT_WINDOWED_VALUE_SERDE_INNER_CLASS, KafkaUserTagSerde.class);
-        consumerProps.put(ConsumerConfig.GROUP_ID_CONFIG, "allezon-aggregate-consumer");
-        consumerProps.put(StreamsConfig.APPLICATION_ID_CONFIG, "allezon-aggregate-reader");
-        consumerProps.put(StreamsConfig.CLIENT_ID_CONFIG, "allezon-aggregate-reader-client");
-
-        consumerProps.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-
-        final Deserializer<Windowed<KafkaUserTag>> windowedDeserializer = new TimeWindowedDeserializer(kafkaUserTagSerde.deserializer(), windowSize.toMillis());
-
-        consumer = new KafkaConsumer<Windowed<KafkaUserTag>, Long>(consumerProps, windowedDeserializer, Serdes.Long().deserializer());
+        // todo zakomentowane żeby nie psuć kompilacji UseCase 1+2
+//        producerProps = new Properties();
+//        producerProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+//        producerProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+//        producerProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaUserTagSerializer.class);
+//        producerProps.put(ProducerConfig.ACKS_CONFIG, "all");
+//        producer = new KafkaProducer<>(producerProps);
+//
+//        consumerProps = new Properties();
+//        consumerProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+//        consumerProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+//        consumerProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaUserTagSerializer.class);
+//        consumerProps.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, KafkaUserTagSerde.class);
+//        consumerProps.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, KafkaUserTagSerde.class);
+//        consumerProps.put(StreamsConfig.DEFAULT_WINDOWED_KEY_SERDE_INNER_CLASS, KafkaUserTagSerde.class);
+//        consumerProps.put(StreamsConfig.DEFAULT_WINDOWED_VALUE_SERDE_INNER_CLASS, KafkaUserTagSerde.class);
+//        consumerProps.put(ConsumerConfig.GROUP_ID_CONFIG, "allezon-aggregate-consumer");
+//        consumerProps.put(StreamsConfig.APPLICATION_ID_CONFIG, "allezon-aggregate-reader");
+//        consumerProps.put(StreamsConfig.CLIENT_ID_CONFIG, "allezon-aggregate-reader-client");
+//
+//        consumerProps.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+//
+//        final Deserializer<Windowed<KafkaUserTag>> windowedDeserializer = new TimeWindowedDeserializer(kafkaUserTagSerde.deserializer(), windowSize.toMillis());
+//
+//        consumer = new KafkaConsumer<Windowed<KafkaUserTag>, Long>(consumerProps, windowedDeserializer, Serdes.Long().deserializer());
     }
 
     public void put(UserTag userTag) {
