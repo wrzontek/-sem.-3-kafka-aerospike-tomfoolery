@@ -80,7 +80,6 @@ public class AerospikeDao {
                     new UserProfile(userTag.getCookie(), new ArrayList<>(), new ArrayList<>())
                     : userProfileSerDe.deserialize(Snappy.uncompress((byte[]) record.getValue(MESSAGE_BIN)), UserProfile.getClassSchema());
 
-
             if (userTag.getAction().toString().equals(Action.BUY.toString())) {
                 insertUserTagSorted(userProfile.getBuys(), userTag);
                 if (userProfile.getBuys().size() > 200)
